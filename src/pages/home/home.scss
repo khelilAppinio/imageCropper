@@ -4,5 +4,20 @@ page-home {
     ion-content.disable-scrolling .scroll-content {
         overflow-y: hidden;
     }
+  div.img-container {
+    max-height: 300px;
+    overflow: hidden;
+    background-color: black;
+    position: relative;
+    /*.guid{
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      background-color: red;
+    }*/
+    .trans-anim{
+      transition: all ease .2s;
+    }
+  }
         
 }

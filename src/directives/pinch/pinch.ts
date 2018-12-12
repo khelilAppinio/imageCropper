@@ -58,6 +58,16 @@ export class PinchDirective implements AfterViewInit, OnDestroy {
   @Output()
   public pinchend: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  public dragging: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public dragStart: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public dragEnd: EventEmitter<any> = new EventEmitter<any>();
+
+
 
   @HostListener('touchstart', ['$event'])
   public onTouchStart(e) {
@@ -70,6 +80,9 @@ export class PinchDirective implements AfterViewInit, OnDestroy {
 
       this.isPinching = true;
 
+    }
+    else if(1 == e.touches.length){
+      this.dragStart.emit(e);
     }
   }
 
@@ -86,7 +99,9 @@ export class PinchDirective implements AfterViewInit, OnDestroy {
       this.isPinching = false;
 
       this.pinchend.emit(e);
-
+    }
+    else{
+      this.dragEnd.emit(e);
     }
   }
 
@@ -108,6 +123,8 @@ export class PinchDirective implements AfterViewInit, OnDestroy {
       // emit the scale!
       this.pinchmove.emit({ scale: this.scale });
 
+    }else{
+      this.dragging.emit(e);
     }
   }
 
