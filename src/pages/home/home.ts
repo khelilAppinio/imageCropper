@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, Renderer2} from '@angular/core';
 import {Gesture} from "ionic-angular";
 
 const MAX_SCALE = 2;
@@ -49,7 +49,7 @@ export class HomePage {
   @ViewChild('image') image;
   @ViewChild('canvas') canvas;
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
 
   }
 
@@ -64,7 +64,7 @@ export class HomePage {
     this.imgContainerHeight = this.imgContainer.nativeElement.offsetHeight;
     this.imgContainerWidth = this.imgContainer.nativeElement.offsetWidth;
 
-    console.log(this.imgContainerWidth);
+
 
 
 
@@ -108,7 +108,7 @@ export class HomePage {
 
     // set the scale so we can track it globally
     this.scale = e.scale;
-
+    this.renderer.setStyle(this.image.nativeElement,'transform','scale('+this.scale+') translateX('+this.translateX+'px) translateY('+this.translateY+')');
     // total amount we scaled
     this.totalScaled = this.alreadyScaled * e.scale;
 
@@ -139,6 +139,8 @@ export class HomePage {
     this.transAnim = false;
     this.translateX = this.lastTranslateX + this.currentPostionX - this.dragStartPositionX;
     this.translateY = this.lastTranslateY + this.currentPostionY - this.dragStartPositionY;
+
+    this.renderer.setStyle(this.image.nativeElement,'transform','scale('+this.scale+') translateX('+this.translateX+'px) translateY('+this.translateY+')');
   }
 
   public ondragStart(e) {
